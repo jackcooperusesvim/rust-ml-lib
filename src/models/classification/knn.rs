@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::hash::Hash;
+//TODO: ADD CONSTRAINTS ON VECTOR INPUT LENGTH
 
 #[derive(Clone)]
 struct Knn<C: Eq + Hash + Clone> {
@@ -74,10 +75,41 @@ mod tests {
     use super::*;
 
     #[test]
-    fn basic_knn() {
+    fn k1_basic_knn() {
         let mut model = Knn::new(1);
         let training_data: Vec<(Vec<f32>, i32)> =
-            vec![(vec![-1.0], 1), (vec![1.0], 1), (vec![2.0], 3)];
+            vec![(vec![-1.0], 1), (vec![1.0], 2), (vec![2.0], 3)];
         model.train(training_data);
+
+        assert_eq!(model.eval(vec![-2.0]).unwrap(), 1);
+        assert_eq!(model.eval(vec![1.3]).unwrap(), 2);
+        assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
+        assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
+    }
+
+    #[test]
+    fn k2_basic_knn() {
+        let mut model = Knn::new(3);
+        let training_data: Vec<(Vec<f32>, i32)> = vec![
+            //sec1
+            (vec![-1.0, 0.0], 1),
+            (vec![2.0, 0.0], 2),
+            (vec![0.0, 1.0], 3),
+            (vec![0.0, -2.0], 4),
+            //sec2
+            (vec![-1.0, 1.0], 2),
+            (vec![2.0, 1.0], 1),
+            (vec![2.0, 1.0], 4),
+            (vec![1.0, -2.0], 3),
+        ];
+
+        model.train(training_data);
+        assert_eq!(model.eval(vec![-1.0, 0.0]).unwrap(), 1)
+
+        //TODO: FIX THESE ASSERTS
+        //     assert_eq!(model.eval(vec![-2.0]).unwrap(), 1);
+        //     assert_eq!(model.eval(vec![1.3]).unwrap(), 2);
+        //     assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
+        //     assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
     }
 }
