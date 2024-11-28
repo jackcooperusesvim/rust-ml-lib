@@ -27,7 +27,7 @@ impl<C: Clone + Eq + Hash> Knn<C> {
         };
     }
 
-    fn eval(&self, input: Vec<f32>) -> Option<C> {
+    fn eval(&self, input: &Vec<f32>) -> Option<C> {
         match &self.data {
             Some(training_data) => {
                 let mut dist: Vec<(f32, C)> = training_data
@@ -81,10 +81,10 @@ mod tests {
             vec![(vec![-1.0], 1), (vec![1.0], 2), (vec![2.0], 3)];
         model.train(training_data);
 
-        assert_eq!(model.eval(vec![-2.0]).unwrap(), 1);
-        assert_eq!(model.eval(vec![1.3]).unwrap(), 2);
-        assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
-        assert_eq!(model.eval(vec![4.3]).unwrap(), 3);
+        assert_eq!(model.eval(&vec![-2.0]).unwrap(), 1);
+        assert_eq!(model.eval(&vec![1.3]).unwrap(), 2);
+        assert_eq!(model.eval(&vec![4.3]).unwrap(), 3);
+        assert_eq!(model.eval(&vec![4.3]).unwrap(), 3);
     }
 
     #[test]
@@ -92,19 +92,19 @@ mod tests {
         let mut model = Knn::new(3);
         let training_data: Vec<(Vec<f32>, i32)> = vec![
             //sec1
-            (vec![-1.0, 0.0], 1),
-            (vec![2.0, 0.0], 2),
+            (vec![-1.0, 0.0], 2),
+            (vec![2.0, 0.0], 1),
             (vec![0.0, 1.0], 3),
             (vec![0.0, -2.0], 4),
             //sec2
             (vec![-1.0, 1.0], 2),
             (vec![2.0, 1.0], 1),
-            (vec![2.0, 1.0], 4),
+            (vec![1.5, 1.0], 4),
             (vec![1.0, -2.0], 3),
         ];
 
         model.train(training_data);
-        assert_eq!(model.eval(vec![-1.0, 0.0]).unwrap(), 1)
+        assert_eq!(model.eval(&vec![1.0, 1.0]).unwrap(), 1)
 
         //TODO: FIX THESE ASSERTS
         //     assert_eq!(model.eval(vec![-2.0]).unwrap(), 1);
