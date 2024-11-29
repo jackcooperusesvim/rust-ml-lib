@@ -8,12 +8,14 @@
 - [x] MSE
 
 ## To-Implement:
-- [ ] OLS Regression
+- [ ] MLP
+    - [ ] Backpropogation
+    - [ ] Gradient Descent
+
+- [ ] Sochastic Gradient Descent
+- [ ] OLS Regression (Hard Linear Algebra)
 - [ ] Softmax Function
 - [ ] Gradient Boosting
-- [ ] Basic NN
 - [ ] Naive Bayes
 - [ ] SVM
-- [ ] Gradient Descent
-- [ ] Sochastic Gradient Descent
 - [ ] AutoDiff

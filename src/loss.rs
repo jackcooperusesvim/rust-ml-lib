@@ -1,4 +1,3 @@
-use super::*;
 pub trait RegressionLossFunction {
     fn eval(&self, out: Vec<f32>, exp_out: Vec<f32>) -> f32;
     fn grads(&self, out: Vec<f32>, exp_out: Vec<f32>) -> Vec<f32>;
