@@ -1,3 +1,1 @@
-pub trait Activation {
-    fn evaluate(Vec<>)
-}
+pub trait Activation {}
